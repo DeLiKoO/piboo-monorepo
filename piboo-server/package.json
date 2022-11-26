@@ -4,7 +4,6 @@
   "description": "Backend for PiBoo - Another Photobooth for RaspberryPi",
   "main": "dist/src/index.js",
   "scripts": {
-    "prebuild:electron": "electron-build-env neon build rscam-node-addon --release",
     "build": "tsc -p tsconfig.json",
     "start": "node dist/src/main.js",
     "dev": "node -r ts-node/register src/index.ts",
@@ -15,8 +14,8 @@
   "dependencies": {
     "jimp": "^0.9.8",
     "node-lp": "^1.0.2",
+    "noderscam": "workspace:^1.0.0",
     "pdfkit": "^0.12.1",
-    "rscam-node-addon": "workspace:^1.0.0",
     "sharp": "0.22.1",
     "ws": "^7.4.3"
   },

@@ -5,7 +5,8 @@
     "workspaces": [
         "rscam-node-addon",
         "piboo-server",
-        "piboo"
+        "piboo",
+        "noderscam"
     ],
     "scripts": {
         "build": "yarn workspace piboo-server build && yarn workspace piboo build"

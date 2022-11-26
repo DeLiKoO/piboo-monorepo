@@ -10,7 +10,8 @@
     "neon-cli": "^0.7.0"
   },
   "scripts": {
-    "install": "neon build -- --target=aarch64-unknown-linux-gnu",
+    "build:sysroot": "RUSTFLAGS=--sysroot=~/.cross-sysroot neon build -- -Z build-std --target=aarch64-unknown-linux-gnu",
+    "build": "neon build -- --target=aarch64-unknown-linux-gnu",
     "test": "node lib/test.js"
   }
 }
