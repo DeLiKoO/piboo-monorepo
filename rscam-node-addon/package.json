@@ -10,7 +10,7 @@
     "neon-cli": "^0.7.0"
   },
   "scripts": {
-    "install": "neon build",
+    "install": "neon build -- --target=aarch64-unknown-linux-gnu",
     "test": "node lib/test.js"
   }
 }

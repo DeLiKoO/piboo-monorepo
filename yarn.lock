@@ -14372,7 +14372,7 @@ __metadata:
     rscam-node-addon: "workspace:^1.0.0"
     sharp: 0.22.1
     ts-node: ^9.1.1
-    typescript: ~4.1.5
+    typescript: ~3.7.0
     ws: ^7.4.3
   languageName: unknown
   linkType: soft
@@ -18861,16 +18861,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:~4.1.5":
-  version: 4.1.6
-  resolution: "typescript@npm:4.1.6"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 54aed909f94b16178c8a8d8911871b4e1c04454a3e6c82166715e28083e7ce6271e4d1df6f82c89544a4759b07aec780785032534e9c93b254e2107a18712c05
-  languageName: node
-  linkType: hard
-
 "typescript@patch:typescript@~3.7.0#~builtin<compat/typescript>":
   version: 3.7.7
   resolution: "typescript@patch:typescript@npm%3A3.7.7#~builtin<compat/typescript>::version=3.7.7&hash=c44097"
@@ -18878,16 +18868,6 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 61283b54e3976aade14e1e1065d978dc9b11539d5a1ffeee3daf066ff095436e0de3f98759af6bcd32a0e4196a50881daf470c5e4a60768748b1b06f1b680096
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@~4.1.5#~builtin<compat/typescript>":
-  version: 4.1.6
-  resolution: "typescript@patch:typescript@npm%3A4.1.6#~builtin<compat/typescript>::version=4.1.6&hash=4a8eb8"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 3bd9915f236817e4e2d32dd0d90e8902875929f014bb87a478000e32adda91d12f0425931ee6f9d6a2bc7d0c9242588fcee1050ac294497dfabf27d3d73b335c
   languageName: node
   linkType: hard
 
