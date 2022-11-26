@@ -1,0 +1,14 @@
+{
+    "name": "piboo-project",
+    "version": "1.0.0",
+    "private": true,
+    "workspaces": [
+        "rscam-node-addon",
+        "piboo-server",
+        "piboo"
+    ],
+    "scripts": {
+        "build": "yarn workspace piboo-server build && yarn workspace piboo build"
+    },
+    "packageManager": "yarn@3.3.0"
+}

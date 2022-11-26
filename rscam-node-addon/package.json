@@ -1,0 +1,16 @@
+{
+  "name": "rscam-node-addon",
+  "version": "1.0.0",
+  "description": "WebCam support addon for node.js based on rscam (v4l2)",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "author": "Christophe DELIQUAIRE <christophe.deliquaire@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "neon-cli": "^0.7.0"
+  },
+  "scripts": {
+    "install": "neon build",
+    "test": "node lib/test.js"
+  }
+}

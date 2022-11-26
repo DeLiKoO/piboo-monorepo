@@ -1,0 +1,5 @@
+appId: "com.piboo.app"
+productName: "PiBoo"
+electronDownload:
+  arch: "aarch64"
+  platform: "linux"

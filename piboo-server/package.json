@@ -1,0 +1,33 @@
+{
+  "name": "piboo-server",
+  "version": "1.0.0",
+  "description": "Backend for PiBoo - Another Photobooth for RaspberryPi",
+  "main": "dist/src/index.js",
+  "scripts": {
+    "prebuild:electron": "electron-build-env neon build rscam-node-addon --release",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/src/main.js",
+    "dev": "node -r ts-node/register src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Chris Dee",
+  "license": "ISC",
+  "dependencies": {
+    "jimp": "^0.9.8",
+    "node-lp": "^1.0.2",
+    "pdfkit": "^0.12.1",
+    "rscam-node-addon": "workspace:^1.0.0",
+    "sharp": "0.22.1",
+    "ws": "^7.4.3"
+  },
+  "devDependencies": {
+    "@tsconfig/node12": "^1.0.7",
+    "@types/electron": "^1.6.10",
+    "@types/node": "^14.14.27",
+    "@types/pdfkit": "^0.11.0",
+    "@types/sharp": "^0.28.0",
+    "@types/ws": "^7.4.0",
+    "ts-node": "^9.1.1",
+    "typescript": "~3.7.0"
+  }
+}
