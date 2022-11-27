@@ -1,5 +1,17 @@
 appId: "com.piboo.app"
 productName: "PiBoo"
 electronDownload:
-  arch: "aarch64"
+  arch: "arm64"
   platform: "linux"
+linux:
+  target: AppImage
+deb:
+  depends: 
+    - gconf2
+    - gconf-service
+    - libnotify4
+    - libappindicator1
+    - libxtst6
+    - libnss3
+    - libv4l2
+    - libvips
