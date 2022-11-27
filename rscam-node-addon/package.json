@@ -6,7 +6,7 @@
   "types": "lib/index.d.ts",
   "author": "Christophe DELIQUAIRE <christophe.deliquaire@gmail.com>",
   "license": "MIT",
-  "dependencies": {
+  "devDependencies": {
     "neon-cli": "^0.7.0"
   },
   "scripts": {

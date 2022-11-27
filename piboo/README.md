@@ -1,4 +1,4 @@
 # Recommended node & electron versions
-- node 12.22.12
-- electron 6.1.12
+- electron 21.3.1
+- node 16.16.0
 

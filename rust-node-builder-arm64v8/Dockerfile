@@ -2,7 +2,7 @@
 FROM --platform=linux/arm64/v8 arm64v8/ubuntu:latest
 WORKDIR /root
 
-ENV NODE_VERSION "12.22.7"
+ENV NODE_VERSION "16.16.0"
 
 # Base system dependencies
 RUN apt update && apt upgrade -y
@@ -32,6 +32,9 @@ RUN ln -s /opt/node-v${NODE_VERSION} /opt/node
 ENV PATH "$PATH:/opt/node/bin"
 RUN npm -v
 RUN node -v
+
+# yarn
+RUN npm install -g yarn
 
 # cargo config to fix huge memory leak during cargo install
 COPY ./.cargo/config .cargo/config

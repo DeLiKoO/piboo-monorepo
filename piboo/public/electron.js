@@ -63,7 +63,6 @@ function createWindow() {
         webPreferences: {
             // devTools: false,
             nodeIntegration: true,
-            enableRemoteModule: true
         }
     });
     printingWorkerWindow = new BrowserWindow({
@@ -71,7 +70,6 @@ function createWindow() {
         webPreferences: {
             // devTools: false,
             nodeIntegration: true,
-            enableRemoteModule: true
         }
     });
 
