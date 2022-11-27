@@ -14,8 +14,8 @@
   "dependencies": {
     "jimp": "^0.9.8",
     "node-lp": "^1.0.2",
-    "noderscam": "workspace:^1.0.0",
     "pdfkit": "^0.12.1",
+    "rscam-node-addon": "workspace:^1.0.0",
     "sharp": "0.22.1",
     "ws": "^7.4.3"
   },
@@ -27,6 +27,6 @@
     "@types/sharp": "^0.28.0",
     "@types/ws": "^7.4.0",
     "ts-node": "^9.1.1",
-    "typescript": "~3.7.0"
+    "typescript": "~4.1.5"
   }
 }
