@@ -4,14 +4,20 @@ electronDownload:
   arch: "arm64"
   platform: "linux"
 linux:
-  target: AppImage
-deb:
-  depends: 
-    - gconf2
-    - gconf-service
-    - libnotify4
-    - libappindicator1
-    - libxtst6
-    - libnss3
+  target:
+    - target: snap
+      arch: "arm64"
+snap:
+  confinement: devmode
+  grade: devel
+  buildPackages: 
+    - libv4l2-dev
+  stagePackages:
+    - default
     - libv4l2
     - libvips
+  plugs:
+    - default
+    - camera
+    - cups
+  allowNativeWayland: true

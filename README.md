@@ -4,12 +4,18 @@ Check [rust-node-builder-arm64v8's README.md](rust-node-builder-arm64v8/README.m
 
 # Building for aarch64 on Docker
 ```bash
-docker run -m 4096m -it -v $(pwd):/Projects rust-node-builder-arm64v8 /bin/bash
+docker run --privileged -it -v $(pwd):/home/developer/piboo rust-node-builder-arm64v8 /bin/bash
 ```
 
-Once inside the guest shell:
+Once inside the guest shell, you are logged in as root. Wait for systemd to start and snap to update, then log in as `developer`:
 ```bash
-cd /Projects
+su - developer
+```
+
+Go to the project's directory and build it
+```bash
+cd ~/piboo
 npm install -g yarn
-yarn install && yarn build && yarn dist
+yarn install && yarn build
+yarn dist
 ```

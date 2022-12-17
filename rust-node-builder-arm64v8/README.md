@@ -18,8 +18,9 @@ docker buildx build -t rust-node-builder-arm64v8:latest --platform linux/arm64/v
 ```
 
 ## Running an interactive shell
+Open a terminal from the root of the project and run
 ```
-docker run -it rust-node-builder-arm64v8
+docker run --privileged -it -v $(pwd):/home/developer/piboo rust-node-builder-arm64v8 bash
 root@6e3f4aee301b:~# uname -m
 aarch64
 ```
