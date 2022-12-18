@@ -3,13 +3,12 @@
     "version": "1.0.0",
     "private": true,
     "workspaces": [
-        "rscam-node-addon",
         "piboo-server",
         "piboo",
         "noderscam"
     ],
     "scripts": {
-        "build": "yarn workspace rscam-node-addon build && yarn workspace piboo-server build && yarn workspace piboo build",
+        "build": "yarn workspace noderscam build && yarn workspace piboo-server build && yarn workspace piboo build",
         "dist": "yarn workspace piboo dist"
     },
     "packageManager": "yarn@3.3.0"
