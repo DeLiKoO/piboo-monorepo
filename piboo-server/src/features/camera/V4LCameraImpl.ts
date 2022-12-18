@@ -5,7 +5,7 @@
 import AbstractCamera from "./AbstractCamera";
 import LivePreviewCallback from "./LivePreviewCallback";
 
-import { Webcam } from 'rscam-node-addon';
+import { Webcam } from 'noderscam';
 import Frame from "./Frame";
 
 export default class V4LCameraImpl implements AbstractCamera {
