@@ -1,4 +1,4 @@
-declare module "rscam-node-addon" {
+declare module "noderscam" {
 
     export class Webcam {
         constructor(path: string);
