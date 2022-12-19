@@ -1,9 +1,25 @@
 const { IpcCameraManager } = require('piboo-server');
-const electron = require('electron');
+const process = require('process');
 
-const ipcCameraManager = new IpcCameraManager(electron.ipcRenderer);
+console.log('camera-worker starting');
+const ipcCameraManager = new IpcCameraManager(process);
+console.log('camera-worker started');
 
-cameraWorkerWindow.on('close', () => {
+process.on('exit', () => {
     ipcCameraManager.dispose();
-    ipcCameraManager = null;
+    console.log('camera-worker exited');
 });
+
+process.on('message', (message) => {
+    console.log('camera-worker', {message});
+    if(message === undefined) {
+        return;
+    }
+    ipcCameraManager.handleMessage(message);
+});
+
+function loop() {
+    setTimeout(() => loop(), 1000);
+}
+
+loop();

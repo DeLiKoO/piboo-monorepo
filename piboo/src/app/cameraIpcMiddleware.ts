@@ -66,6 +66,7 @@ interface HasDispatch {
 }
 
 const messageHandler = (store: HasDispatch) => (event: Electron.IpcRendererEvent, arg0: any) => {
+  console.debug({arg0});
   const message = arg0 as Message;
   const { dispatch } = store;
   if (message.class === MessageClass.CAMERA_MANAGER) {

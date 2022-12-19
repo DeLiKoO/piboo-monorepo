@@ -9,11 +9,24 @@ const path = require('path');
 const url = require('url');
 const { ipcMain } = require('electron');
 
+const { fork } = require('child_process');
+const printingNodeWorker = fork(path.join(__dirname, 'printing-worker.js'), ['args'], {
+	stdio: ['pipe', 'pipe', 'pipe', 'ipc']
+});
+
+const cameraNodeWorker = fork(path.join(__dirname, 'camera-worker.js'), ['args'], {
+	stdio: ['pipe', 'pipe', 'pipe', 'ipc']
+});
+
+console.log('hi there');
+printingNodeWorker.stdout.on('data', (chunk) => console.log(chunk.toString()));
+printingNodeWorker.stderr.on('data', (chunk) => console.log(chunk.toString()));
+cameraNodeWorker.stdout.on('data', (chunk) => console.log(chunk.toString()));
+cameraNodeWorker.stderr.on('data', (chunk) => console.log(chunk.toString()));
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
-let cameraWorkerWindow;
-let printingWorkerWindow;
 
 function createWindow() {
     // Enable electron's patches for isolating renderer processes
@@ -25,13 +38,42 @@ function createWindow() {
     //       and make 'rscam' context-aware.
     app.allowRendererProcessReuse = false;
 
+    printingNodeWorker.on('message', (message) => {
+        if(mainWindow === null) {
+            const e = new Error('Received a message while app is terminating.')
+            console.error(e);
+            return;
+        }
+        mainWindow.webContents.send('message', message);
+    });
+
+    cameraNodeWorker.on('message', (message) => {
+        if(mainWindow === null) {
+            const e = new Error('Received a message while app is terminating.')
+            console.error(e);
+            return;
+        }
+        mainWindow.webContents.send('message', message);
+    });
+
+    ipcMain.on('message', (event, message) => {
+        if (message.class === 0) { // MessageClass.CAMERA_MANAGER
+            cameraNodeWorker.send(message);
+        } else if (message.class === 1) { // MessageClass.PRINTING_MANAGER
+            printingNodeWorker.send(message);
+        }
+    });
+
     // Create the browser window.
     mainWindow = new BrowserWindow({
         width: 800, 
         height: 600, 
         webPreferences: {
             // devTools: false,
-            nodeIntegration: true
+            sandbox: false,
+            nodeIntegration: true,
+            webSecurity: false,
+            contextIsolation: false,
         }
     });
 
@@ -49,54 +91,7 @@ function createWindow() {
         // Dereference the window object, usually you would store windows
         // in an array if your app supports multi windows, this is the time
         // when you should delete the corresponding element.
-
-        cameraWorkerWindow.close();
-        cameraWorkerWindow = null;
-        printingWorkerWindow.close();
-        printingWorkerWindow = null;
         mainWindow = null;
-    });
-
-    // Create hidden worker windows
-    cameraWorkerWindow = new BrowserWindow({
-        show: false,
-        webPreferences: {
-            // devTools: false,
-            nodeIntegration: true,
-        }
-    });
-    printingWorkerWindow = new BrowserWindow({
-        // show: false,
-        webPreferences: {
-            // devTools: false,
-            nodeIntegration: true,
-        }
-    });
-
-    // Load the workers
-    cameraWorkerWindow.loadFile(path.join(__dirname, "../build/camera-worker.html"));
-    cameraWorkerWindow.webContents.openDevTools();
-
-    printingWorkerWindow.loadFile(path.join(__dirname, "../build/printing-worker.html"));
-    printingWorkerWindow.webContents.openDevTools();
-
-
-    // NOTICE: Setup ipcMain to relay messages between renderers
-    ipcMain.on('message', (event, message) => {
-        if(cameraWorkerWindow === null || printingWorkerWindow === null || mainWindow === null) {
-            const e = new Error('Received a message while app is terminating.')
-            console.error(e);
-        }
-        if(event.sender === cameraWorkerWindow.webContents || event.sender === printingWorkerWindow.webContents) {
-            mainWindow.webContents.send('message', message);
-        } else if (event.sender === mainWindow.webContents && message.class === 0) { // MessageClass.CAMERA_MANAGER
-            cameraWorkerWindow.webContents.send('message', message);
-        } else if (event.sender === mainWindow.webContents && message.class === 1) { // MessageClass.PRINTING_MANAGER
-            printingWorkerWindow.webContents.send('message', message);
-        } else {
-            const e = new Error('Received message from an unknown/unhandled source.');
-            throw e;
-        }
     });
 
 }

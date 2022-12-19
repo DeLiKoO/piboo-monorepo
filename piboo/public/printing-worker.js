@@ -1,9 +1,25 @@
 const { IpcPrintingManager } = require('piboo-server');
-const electron = require('electron');
+const process = require('process');
 
-const ipcPrintingManager = new IpcPrintingManager(electron.ipcRenderer);
+console.log('printing-worker starting');
+const ipcPrintingManager = new IpcPrintingManager(process);
+console.log('printing-worker started');
 
-printingWorkerWindow.on('close', () => {
+process.on('exit', () => {
     ipcPrintingManager.dispose();
-    ipcPrintingManager = null;
+    console.log('printing-worker exited');
 });
+
+process.on('message', (message) => {
+    console.log('printing-worker', {message});
+    if(message === undefined) {
+        return;
+    }
+    ipcPrintingManager.handleMessage(message);
+});
+
+function loop() {
+    setTimeout(() => loop(), 1000);
+}
+
+loop();

@@ -1,23 +1,17 @@
-import { IpcRenderer, IpcRendererEvent } from 'electron';
 import PrintingManager from '../../services/printing-manager/PrintingManager';
 import PrintingManagerMessage from "../../services/printing-manager/PrintingManagerMessage";
 import Message, { MessageClass } from '../../services/Message';
+import { ChildProcess } from 'child_process';
 
 export default class IpcPrintingManager extends PrintingManager {
 
-    ipc: IpcRenderer | null;
-    sender: IpcRenderer | null;;
+    process: ChildProcess | null;
 
-    constructor(ipc: IpcRenderer) {
+    constructor(process: ChildProcess) {
         super();
-        this.ipc = ipc;
-        this.sender = null;
+        this.process = process;
         const instance = this;
-        ipc.on('message', function incoming(event: IpcRendererEvent, arg0: any) {
-            // TODO: Change architecture to introduce the concept of request & response
-            // There should be a Server class in charge of protocol (handling requests and sending responses)
-            // The Server should use a Manager that provides concrete operations
-            instance.sender = event.sender;
+        process.on('message', function incoming(arg0: any) {
             const message: Message = arg0 as Message;
             switch(message.class) {
                 case MessageClass.PRINTING_MANAGER:
@@ -30,12 +24,11 @@ export default class IpcPrintingManager extends PrintingManager {
     }
 
     async sendMessage(message: PrintingManagerMessage): Promise<void> {
-        this.sender!.send('message', message);
+        this.process!.send(message);
     }
 
     dispose() {
-        this.ipc = null;
-        this.sender = null;
+        this.process = null;
     }
 
 }

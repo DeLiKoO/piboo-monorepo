@@ -12921,7 +12921,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"neon-cli@npm:^0.7.0, neon-cli@npm:^0.7.1":
+"neon-cli@npm:^0.7.1":
   version: 0.7.1
   resolution: "neon-cli@npm:0.7.1"
   dependencies:
@@ -16320,14 +16320,6 @@ __metadata:
   checksum: 3a02731c20c71321fae647c9c9cab0febee0580c6af029fdcd5dd6f424b8c85119d92c8554c6837327fd323c2458e92d955bbebc90ca6bed87cc626695e7c31f
   languageName: node
   linkType: hard
-
-"rscam-node-addon@workspace:rscam-node-addon":
-  version: 0.0.0-use.local
-  resolution: "rscam-node-addon@workspace:rscam-node-addon"
-  dependencies:
-    neon-cli: ^0.7.0
-  languageName: unknown
-  linkType: soft
 
 "rsvp@npm:^4.8.4":
   version: 4.8.5
