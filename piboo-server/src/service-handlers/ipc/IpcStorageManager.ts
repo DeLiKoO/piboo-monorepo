@@ -1,9 +1,9 @@
-import CameraManager from '../../services/camera-manager/CameraManager';
-import CameraManagerMessage from "../../services/camera-manager/CameraManagerMessage";
+import StorageManager from '../../services/storage-manager/StorageManager';
+import StorageManagerMessage from "../../services/storage-manager/StorageManagerMessage";
 import Message, { MessageClass } from '../../services/Message';
 import { ChildProcess } from 'child_process';
 
-export default class IpcCameraManager extends CameraManager {
+export default class IpcStorageManager extends StorageManager {
 
     process: ChildProcess | null;
 
@@ -14,8 +14,8 @@ export default class IpcCameraManager extends CameraManager {
         process.on('message', function incoming(arg0: any) {
             const message: Message = arg0 as Message;
             switch(message.class) {
-                case MessageClass.CAMERA_MANAGER:
-                    instance.handleMessage(message as CameraManagerMessage);
+                case MessageClass.STORAGE_MANAGER:
+                    instance.handleMessage(message as StorageManagerMessage);
                     break;
                 default:
                     throw new Error(`Unhandled message class : '${message.class}'`);
@@ -23,7 +23,7 @@ export default class IpcCameraManager extends CameraManager {
         });
     }
 
-    async sendMessage(message: CameraManagerMessage): Promise<void> {
+    async sendMessage(message: StorageManagerMessage): Promise<void> {
         this.process!.send(message);
     }
 

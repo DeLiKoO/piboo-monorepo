@@ -1,5 +1,5 @@
 export enum MessageClass {
-    CAMERA_MANAGER,
+    STORAGE_MANAGER,
     PRINTING_MANAGER,
 }
 

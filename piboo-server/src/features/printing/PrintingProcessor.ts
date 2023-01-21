@@ -5,7 +5,8 @@ import createPrinter, { Printer, Options, Job } from 'node-lp';
 import CollageRenderer from '../collage/PdfKitCollageRenderer';
 import PrinterSettings from './PrinterSettings';
 
-const DEFAULT_CAPTURE_PATH = process.env.CAPTURE_PATH || path.resolve(process.cwd(), 'public', '.capture');
+import { CAPTURE_PATH } from '../../appConfig';
+
 const PRINTER_PRINT_TIMEOUT_MS = 10000;
 
 export type PrintingResult = string;
@@ -17,7 +18,7 @@ export default class PrintingProcessor {
 
     constructor(printerSettings: PrinterSettings, capturePath?: string) {
         this.printerSettings = printerSettings;
-        this.capturePath = capturePath || DEFAULT_CAPTURE_PATH;
+        this.capturePath = capturePath || CAPTURE_PATH;
     }
 
     async run(): Promise<PrintingResult> {

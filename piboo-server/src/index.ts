@@ -1,9 +1,7 @@
-import WebSocketCameraManager from './service-handlers/websocket/WebSocketCameraManager';
-import IpcCameraManager from './service-handlers/ipc/IpcCameraManager';
+import IpcStorageManager from './service-handlers/ipc/IpcStorageManager';
 import IpcPrintingManager from './service-handlers/ipc/IpcPrintingManager';
 
 export {
-    WebSocketCameraManager,
-    IpcCameraManager,
+    IpcStorageManager,
     IpcPrintingManager,
 }
