@@ -2,14 +2,14 @@
 import { AnyAction, configureStore, getDefaultMiddleware, ThunkDispatch } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 import appReducer, { AppState } from './appReducer';
-import captureIpcMiddleware from './captureIpcMiddleware';
+import storageIpcMiddleware from './storageIpcMiddleware';
 import printingIpcMiddleware from './printingIpcMiddleware';
 
 const store = configureStore({
   reducer: appReducer,
   middleware: [
     ...getDefaultMiddleware(), 
-    captureIpcMiddleware(),
+    storageIpcMiddleware(),
     printingIpcMiddleware(),
   ],
 });

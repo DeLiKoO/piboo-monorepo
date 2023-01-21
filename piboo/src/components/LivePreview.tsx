@@ -1,53 +1,53 @@
-import { ipcRenderer } from 'electron';
-import React, { useEffect } from 'react'; // we need this to make JSX compile
+import React, { useRef } from 'react'; // we need this to make JSX compile
 import { connect, useDispatch } from 'react-redux';
-import { bindToCamera } from '../app/reducers/captureControlSlice';
+import Webcam from "react-webcam";
+import { useReduxEffect } from 'use-redux-effect';
+import { savePicture } from '../app/storageIpcMiddleware';
 
-type Message = any;
-type CameraManagerMessage = any;
+const CAM_WIDTH = 1920;
+const CAM_HEIGHT = 1080;
+// const PLACEHOLDER_IMG = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
+
 
 type ReactProps = {
-  device: string,
+  facingMode: "user" | "environment" | "left" | "right",
 }
 
 type LivePreviewProps = ReactProps;
 
 const LivePreview = (props: LivePreviewProps) => {
 
-  const myRef: React.RefObject<HTMLImageElement> = React.createRef();
+  // const [img, setImg] = useState(PLACEHOLDER_IMG);
+  const webcamRef: React.Ref<Webcam> = useRef(null);
+
   const dispatch = useDispatch();
-  
-  const onMessage = (event: Electron.IpcRendererEvent, arg0: any) => {
-    const message = arg0 as Message;
-    if(message.class === 0) { // MessageClass.CAMERA_MANAGER
-      const cmm = message as CameraManagerMessage;
-      switch (cmm.type) {
-        case 5: // CAMERA_LIVEPREVIEW_FRAME
-          const img = myRef.current;
-          if(img) {
-            img.src = "data:image/jpeg;base64," + cmm.frame;
-          }
-          break;
-        default:
-          break;
+
+  const videoConstraints = {
+    width: { min: CAM_WIDTH },
+    height: { min: CAM_HEIGHT },
+    aspectRatio: 0.6666666667,
+    facingMode: props.facingMode
+  };
+
+  useReduxEffect((action) => {
+    if (webcamRef.current !== null) {
+      const imageSrc = webcamRef.current.getScreenshot();
+      // setImg(imageSrc ?? PLACEHOLDER_IMG);
+      if (imageSrc !== null) {
+        dispatch(savePicture(imageSrc));
       }
     }
-  }
-
-  useEffect(() => {
-    dispatch(bindToCamera(props.device));
-    ipcRenderer.on('message', onMessage);
-    return () => {
-      ipcRenderer.removeListener('message', onMessage);
-    }
-  }, []);
+  }, "capture", [webcamRef]);
 
   return (
-    <img 
-      ref={myRef}
-      width={960}
-      height={540}
-    />
+    <Webcam
+      audio={false}
+      mirrored={true}
+      ref={webcamRef}
+      width={CAM_WIDTH}
+      height={CAM_HEIGHT}
+      videoConstraints={videoConstraints}
+      screenshotFormat="image/jpeg" />
   );
 }
 

@@ -4,11 +4,10 @@
     "private": true,
     "workspaces": [
         "piboo-server",
-        "piboo",
-        "noderscam"
+        "piboo"
     ],
     "scripts": {
-        "build": "yarn workspace noderscam build && yarn workspace piboo-server build && yarn workspace piboo build",
+        "build": "yarn workspace piboo-server build && yarn workspace piboo build",
         "dist": "yarn workspace piboo dist"
     },
     "packageManager": "yarn@3.3.0"

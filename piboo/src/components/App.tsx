@@ -13,7 +13,7 @@ function App() {
         PiBoo Photobooth for RPi - Work in Progress
         <div className={styles.LivePreviewContainer}>
           <div className={styles.LivePreviewOverlay1}>
-            <LivePreview device='/dev/video0'/>
+            <LivePreview facingMode="user"/>
           </div>
           <div className={styles.LivePreviewOverlay2}>
             <CaptureControl />

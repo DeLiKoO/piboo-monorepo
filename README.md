@@ -10,6 +10,6 @@ docker run -m 4096m -it -v $(pwd):/Projects rust-node-builder-arm64v8 /bin/bash
 Once inside the guest shell:
 ```bash
 cd /Projects
-npm install -g yarn
-yarn install && yarn build && yarn dist
+npm install -g pnpm
+pnpm install && pnpm build && pnpm dist
 ```

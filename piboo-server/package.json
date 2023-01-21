@@ -15,7 +15,6 @@
   "dependencies": {
     "jimp": "^0.16.2",
     "node-lp": "^1.0.2",
-    "noderscam": "workspace:^1.0.0",
     "pdfkit": "^0.12.1",
     "sharp": "0.31.2"
   },
