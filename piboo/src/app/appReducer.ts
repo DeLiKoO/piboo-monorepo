@@ -1,7 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import captureControlReducer from './reducers/captureControlSlice';
 import seriesControlReducer from './reducers/seriesControlSlice';
-import { actionReducer } from 'use-redux-effect';
+import { actionReducer } from '../lib/use-redux-effect';
 
 const appReducer = combineReducers({
     captureControl: captureControlReducer,

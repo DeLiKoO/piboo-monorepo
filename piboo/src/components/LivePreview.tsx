@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'; // we need this to make JSX compile
 import { connect, useDispatch } from 'react-redux';
 import Webcam from "react-webcam";
-import { useReduxEffect } from 'use-redux-effect';
+import { useReduxEffect } from '../lib/use-redux-effect';
 import { savePicture } from '../app/storageIpcMiddleware';
 
 const CAM_WIDTH = 1920;
