@@ -2,9 +2,9 @@ import Message from "../Message";
 
 export enum MessageType {
     // Incoming
-    STORAGE_SAVE_PICTURE,
+    SAVE_PICTURE,
     // Outgoing
-    STORAGE_PICTURE_SAVED,
+    PICTURE_SAVED,
 }
 
 export default interface CameraManagerMessage extends Message {

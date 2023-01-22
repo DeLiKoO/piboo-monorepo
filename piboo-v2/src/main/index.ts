@@ -6,6 +6,8 @@ import { ipcMain } from 'electron';
 import PrintingManager from './services/printing-manager/PrintingManager';
 import StorageManager from './services/storage-manager/StorageManager';
 
+import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer';
+
 function createWindow(): void {
 
   const printingManager = new PrintingManager(async (message) => mainWindow.webContents.send('message', message));
@@ -58,6 +60,14 @@ function createWindow(): void {
 app.whenReady().then(() => {
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron')
+
+  installExtension(REDUX_DEVTOOLS)
+        .then((name) => console.log(`Added Extension:  ${name}`))
+        .catch((err) => console.log('An error occurred: ', err));
+
+  installExtension(REACT_DEVELOPER_TOOLS)
+        .then((name) => console.log(`Added Extension:  ${name}`))
+        .catch((err) => console.log('An error occurred: ', err));
 
   // Default open or close DevTools by F12 in development
   // and ignore CommandOrControl + R in production.

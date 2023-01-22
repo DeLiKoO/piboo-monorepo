@@ -2,7 +2,7 @@ import React, { useRef } from 'react'; // we need this to make JSX compile
 import { connect, useDispatch } from 'react-redux';
 import Webcam from "react-webcam";
 import { useReduxEffect } from '../lib/use-redux-effect';
-import { savePicture } from '../app/storageIpcMiddleware';
+import { onSnapshotReceived } from '@renderer/app/reducers/captureControlSlice';
 
 const CAM_WIDTH = 1920;
 const CAM_HEIGHT = 1080;
@@ -30,11 +30,13 @@ const LivePreview = (props: LivePreviewProps) => {
   };
 
   useReduxEffect((action) => {
+    console.log("cheese!");
     if (webcamRef.current !== null) {
       const imageSrc = webcamRef.current.getScreenshot();
       // setImg(imageSrc ?? PLACEHOLDER_IMG);
       if (imageSrc !== null) {
-        dispatch(savePicture(imageSrc));
+        dispatch(onSnapshotReceived(imageSrc));
+        console.log(imageSrc);
       }
     }
   }, "capture", [webcamRef]);

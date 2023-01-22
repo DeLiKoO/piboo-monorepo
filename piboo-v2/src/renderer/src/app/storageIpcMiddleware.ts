@@ -56,7 +56,9 @@ function ipcMiddleware(): ThunkMiddleware<AppState> {
   return store => next => action => {
     switch (action.type) {
       case 'onSnapshotReceived':
-        ipcRenderer.send('message', savePicture(action.payload));
+        const message = savePicture(action.payload);
+        console.log('onSnapshotReceived, sending message through ipcRenderer:', message);
+        ipcRenderer.send('message', message);
         // NOTICE: Only register a one-time listener,
         //         since each PRINTING_PRINT_START request will have only one response.
         ipcRenderer.once('message', messageHandler(store));
