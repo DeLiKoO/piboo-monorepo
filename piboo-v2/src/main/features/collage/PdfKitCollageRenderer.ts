@@ -6,10 +6,6 @@ import CollageRenderer from './CollageRenderer';
 
 export default class PdfKitCollageRenderer extends CollageRenderer {
 
-    process(): Promise<Buffer> {
-        throw new Error('Method not implemented.');
-    }
-
     constructor(images: [PathLike, PathLike, PathLike]) {
         super(images);
     }
