@@ -46,8 +46,8 @@ const LivePreview = (props: LivePreviewProps) => {
       audio={false}
       mirrored={true}
       ref={webcamRef}
-      width={CAM_WIDTH}
-      height={CAM_HEIGHT}
+      width='100%'
+      height='100%'
       videoConstraints={videoConstraints}
       screenshotFormat="image/jpeg" />
   );

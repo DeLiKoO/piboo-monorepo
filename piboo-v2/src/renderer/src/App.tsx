@@ -6,8 +6,8 @@ import styles from './App.module.css';
 
 function App(): JSX.Element {
   return (
-    <div className="container">
-      <header>
+    <div className={styles.App}>
+      <header className={styles.AppHeader}>
         <p>PiBoo Photobooth for RPi - Work in Progress</p>
         <Versions></Versions>
       </header>

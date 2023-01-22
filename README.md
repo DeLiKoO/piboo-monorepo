@@ -11,5 +11,5 @@ Once inside the guest shell:
 ```bash
 cd /Projects
 npm install -g pnpm
-pnpm install && pnpm build && pnpm dist
+pnpm install && pnpm build:linux
 ```
