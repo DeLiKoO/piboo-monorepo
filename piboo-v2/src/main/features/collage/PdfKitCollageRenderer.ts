@@ -1,16 +1,23 @@
 import { PathLike } from 'fs';
 import PDFDocument from 'pdfkit';
 import * as fs from 'fs';
+import * as os from 'os';
 import * as path from 'path';
 import CollageRenderer from './CollageRenderer';
 
 export default class PdfKitCollageRenderer extends CollageRenderer {
 
     constructor(images: [PathLike, PathLike, PathLike]) {
+        console.log(JSON.stringify(images));
         super(images);
     }
 
     async render(destinationPath: PathLike) {
+
+        const images = this._images;
+        const template = path.resolve(os.homedir(), '.config/piboo-v2/Templates/template.png');
+
+        return new Promise((resolve, reject) => {
         // Coordinates are expressed in DTP point unit (aka PostScript point)
         // 1 dtp == 1/72 inch (72ppi) == 0.3527mm
         // A6 Paper Size is 297.64 x 419.53 (in dtp)
@@ -29,10 +36,10 @@ export default class PdfKitCollageRenderer extends CollageRenderer {
         // boxHeight    | hMargin + boxWidth + hMargin + hMargin + boxWidth + hMargin 
         // bMargin      | *
 
-        const tMargin = 100;
-        const bMargin = 50;
-        const vMargin = 10;
-        const hMargin = vMargin;
+        const tMargin = 0.135*paperHeight;
+        const bMargin = 0.27*paperHeight;
+        const vMargin = 0.0072*paperHeight;
+        const hMargin = 0.0166*paperWidth;
         
         const boxHeight = (paperHeight - tMargin - 2*vMargin - bMargin) / 3;
         const boxWidth = (paperWidth - 4*hMargin) / 2;
@@ -54,11 +61,14 @@ export default class PdfKitCollageRenderer extends CollageRenderer {
         // Now, let's lay the page out :)
         const doc = new PDFDocument({size: 'A6'});
         const destinationFile = path.resolve(destinationPath.toString(), 'collage.pdf');
-        doc.pipe(fs.createWriteStream(destinationFile));
+        const writeStream = fs.createWriteStream(destinationFile);
+        writeStream.on("close", () => resolve(destinationFile));
+        writeStream.on("error", reject);
+        doc.pipe(writeStream);
 
         doc
         .image(
-            this._images[0],
+            images[0],
             hMargin,
             tMargin,
             {
@@ -70,7 +80,7 @@ export default class PdfKitCollageRenderer extends CollageRenderer {
 
         doc
         .image(
-            this._images[0],
+            images[0],
             hMargin + boxWidth + hMargin + hMargin,
             tMargin,
             {
@@ -82,7 +92,7 @@ export default class PdfKitCollageRenderer extends CollageRenderer {
 
         doc
         .image(
-            this._images[1],
+            images[1],
             hMargin,
             tMargin + boxHeight + vMargin,
             {
@@ -94,7 +104,7 @@ export default class PdfKitCollageRenderer extends CollageRenderer {
 
         doc
         .image(
-            this._images[1],
+            images[1],
             hMargin + boxWidth + hMargin + hMargin,
             tMargin + boxHeight + vMargin,
             {
@@ -107,7 +117,7 @@ export default class PdfKitCollageRenderer extends CollageRenderer {
 
         doc
         .image(
-            this._images[2],
+            images[2],
             hMargin,
             tMargin + 2*boxHeight + 2*vMargin,
             {
@@ -119,19 +129,39 @@ export default class PdfKitCollageRenderer extends CollageRenderer {
 
         doc
         .image(
-            this._images[2],
+            images[2],
             hMargin + boxWidth + hMargin + hMargin,
             tMargin + 2*boxHeight + 2*vMargin,
             {
                 fit: [boxWidth, boxHeight], // fit or cover ?
                 align: 'center',
                 valign: 'center',
+            }
+        );
+
+        doc.image(
+            template,
+            0,
+            0,
+            {
+                width: paperWidth / 2,
+                height: paperHeight,
+            }
+        );
+
+        doc.image(
+            template,
+            paperWidth / 2,
+            0,
+            {
+                width: paperWidth / 2,
+                height: paperHeight,
             }
         );
 
         doc.end();
 
-        return destinationFile;
+        });
     }
 
 }

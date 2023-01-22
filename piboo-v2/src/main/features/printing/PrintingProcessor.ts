@@ -27,6 +27,7 @@ export default class PrintingProcessor {
 
         // Get last 3 photos
         let list = fs.readdirSync(capturePath);
+        list = list.filter(filename => filename.match(/.*\.jpg$/));
         if(list.length < PICTURES_PER_PAGE) {
             const err = new Error(`Not enough pictures available (${PICTURES_PER_PAGE} required, got ${list.length}).`);
             console.error('PrintingProcessor error:', err);
