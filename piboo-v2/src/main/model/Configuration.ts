@@ -1,4 +1,4 @@
-import PrinterSettings from '../features/printing/PrinterSettings';
+import { PrinterSettings } from '../features/printing/Printer';
 
 export default interface Configuration {
     

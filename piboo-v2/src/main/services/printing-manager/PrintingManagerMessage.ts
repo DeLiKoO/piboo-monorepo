@@ -1,4 +1,4 @@
-import { PrintingResult } from "../../features/printing/PrintingProcessor";
+import { PrintResult } from "../../features/printing/Printer";
 import Message from "../Message";
 
 export enum MessageType {
@@ -12,6 +12,6 @@ export enum MessageType {
 export default interface PrintingManagerMessage extends Message {
     type: MessageType,
     args?: any, // anyObject
-    data?: PrintingResult, // TODO: Add proper typing
+    data?: PrintResult, // TODO: Add proper typing
     err?: unknown,
 }

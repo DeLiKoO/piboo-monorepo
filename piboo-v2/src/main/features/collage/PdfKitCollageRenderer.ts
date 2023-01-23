@@ -12,7 +12,7 @@ export default class PdfKitCollageRenderer extends CollageRenderer {
         super(images);
     }
 
-    async render(destinationPath: PathLike) {
+    async render(destinationPath: PathLike): Promise<string> {
 
         const images = this._images;
         const template = path.resolve(os.homedir(), '.config/piboo-v2/Templates/template.png');
@@ -20,9 +20,9 @@ export default class PdfKitCollageRenderer extends CollageRenderer {
         return new Promise((resolve, reject) => {
         // Coordinates are expressed in DTP point unit (aka PostScript point)
         // 1 dtp == 1/72 inch (72ppi) == 0.3527mm
-        // A6 Paper Size is 297.64 x 419.53 (in dtp)
-        const paperWidth = 297.64;
-        const paperHeight = 419.53;
+        // 4x6 Paper Size is 288 x 432 (in dtp)
+        const paperWidth = 288;
+        const paperHeight = 432;
 
         // Page structure is as follows:
 
@@ -59,11 +59,12 @@ export default class PdfKitCollageRenderer extends CollageRenderer {
         // Inside a box, there is a centered image.
 
         // Now, let's lay the page out :)
-        const doc = new PDFDocument({size: 'A6'});
+        const doc = new PDFDocument({autoFirstPage: false});
         const destinationFile = path.resolve(destinationPath.toString(), 'collage.pdf');
         const writeStream = fs.createWriteStream(destinationFile);
         writeStream.on("close", () => resolve(destinationFile));
         writeStream.on("error", reject);
+        doc.addPage({size: [paperWidth, paperHeight], margin: 0});
         doc.pipe(writeStream);
 
         doc

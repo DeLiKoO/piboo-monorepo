@@ -2,25 +2,23 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 import CollageRenderer from '../collage/PdfKitCollageRenderer';
-import PrinterSettings from './PrinterSettings';
 
 import { CAPTURE_PATH } from '../../appConfig';
+import { PrintResult, PrinterSettings } from './Printer';
+import LpPrinter from './LpPrinter';
 
-const PRINTER_PRINT_TIMEOUT_MS = 10000;
-
-export type PrintingResult = string;
-
+// TODO: Move this implementation up to PrintingManager
 export default class PrintingProcessor {
 
-    private printerSettings: PrinterSettings;
+    private printer: LpPrinter;
     private capturePath: string;
 
     constructor(printerSettings: PrinterSettings, capturePath?: string) {
-        this.printerSettings = printerSettings;
         this.capturePath = capturePath || CAPTURE_PATH;
+        this.printer = new LpPrinter(printerSettings);
     }
 
-    async run(): Promise<PrintingResult> {
+    async run(): Promise<PrintResult> {
 
         const PICTURES_PER_PAGE = 3;
         const capturePath = this.capturePath;
@@ -42,35 +40,12 @@ export default class PrintingProcessor {
         const outFilename = await cp.render(capturePath);
     
         // Send the file to printer
-        // TODO: Add printing options as needed.
-        const printerName = this.printerSettings.printerName;
-        const result = await this.print(printerName, outFilename); // string
-        return result as PrintingResult; // string 
+        const result = await this.printer.print(outFilename);
+        if(result.status !== "OK") {
+            throw new Error("Printing error, status: " + result.status);
+        }
+        return result;
     
-    }
-
-    private async print(_printerName: string, _filename: string): Promise<PrintingResult> {
-        // return new Promise((resolve, reject) => {
-        //     // Configure printer
-        //     const printer: Printer = createPrinter(options);
-        //     console.log({printer});
-        //     let canceled = false;
-        //     // Setup a 10s printer timeout
-        //     setTimeout(() => { 
-        //         canceled = true; 
-        //         reject(new Error('Operation timed out'));
-        //     }, PRINTER_PRINT_TIMEOUT_MS);
-        //     // Start printing
-        //     printer.queueFile(filename, (err, data) => {
-        //         if(canceled) return;
-        //         if(err) {
-        //             reject(err);
-        //         } else {
-        //             resolve(data);
-        //         }
-        //     });
-        // });
-        return new Promise((resolve) => {setTimeout(() => resolve("OK"), PRINTER_PRINT_TIMEOUT_MS)});
     }
 
 }
