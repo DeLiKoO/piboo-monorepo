@@ -1,11 +1,11 @@
 import styles from './CaptureControl.module.css';
 import React, { useEffect, useRef } from 'react';
 import { useAppDispatch } from '../app/store';
-import { startSeries, isPrinting } from '../app/reducers/seriesControlSlice';
+import { startSeries, isPrinting, onPrintingCompleted } from '../app/reducers/seriesControlSlice';
 import { Countdown } from './Countdown';
 import Spinner from 'react-bootstrap/Spinner';
 import { useSelector } from 'react-redux';
-import { startLivePreview, stopLivePreview } from '../app/reducers/captureControlSlice';
+import { selectCountdown, startLivePreview, stopLivePreview } from '../app/reducers/captureControlSlice';
 
 type CaptureControlProps = {
   //device: string,
@@ -16,6 +16,7 @@ export function CaptureControl(props: CaptureControlProps): JSX.Element {
     const myRef = useRef<HTMLDivElement>(null);
     const dispatch = useAppDispatch();
     const printing = useSelector(isPrinting);
+    const countdown = useSelector(selectCountdown);
 
     useEffect(() => {
         if(printing) {
@@ -29,6 +30,13 @@ export function CaptureControl(props: CaptureControlProps): JSX.Element {
         if(event.code === 'Space') {
             dispatch(startSeries());
         }
+        if(event.code === 'R' && printing) {
+            dispatch(onPrintingCompleted());
+        }
+    }
+
+    const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
+        dispatch(startSeries());
     }
 
     // myRef.current?.focus({ preventScroll: false });
@@ -38,9 +46,10 @@ export function CaptureControl(props: CaptureControlProps): JSX.Element {
         ref={myRef}
         className={styles.FlexCenterContainer}
         onKeyPress={onKeyPress}
+        onClick={onClick}
         tabIndex={-1}>
-        <Spinner animation={printing ? "border" : "grow"} />
-        {!printing && <Countdown />}
+        {( printing || countdown === 0) && <Spinner animation={printing ? "border" : "grow"} />}
+        {(!printing && countdown !== 0) && <Countdown />}
     </div>
     );
 }

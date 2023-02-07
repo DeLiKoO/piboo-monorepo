@@ -9,7 +9,7 @@ export function Countdown() {
 
   return (
     <div>
-      <span className={styles.value}>{countdown}</span>
+      <span className={styles.value} style={{fontSize: 120}}>{countdown}</span>
     </div>
   );
 }
