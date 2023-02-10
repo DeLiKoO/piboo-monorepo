@@ -6,18 +6,7 @@ import * as path from 'path';
 
 import { CAPTURE_PATH } from '../../appConfig';
 
-// interface SavePictureArgs {
-//     dataUri: string,
-// }
-
-// interface PictureSavedArgs {
-//     // dataUri: string,
-//     path: string,
-// }
-
-
-/** Ensure directory is created */
-function ensureDirExists(dirPath: fs.PathLike) {
+  function ensureDirExists(dirPath: fs.PathLike) {
     if (!fs.existsSync(dirPath)) {
       fs.mkdirSync(dirPath, { recursive: true });
     } else {
@@ -55,6 +44,7 @@ function ensureDirExists(dirPath: fs.PathLike) {
   }
   
   async function saveCapture(directory: fs.PathLike, data: string | NodeJS.ArrayBufferView): Promise<string> {
+    ensureDirExists(directory);
     const filePath = path.resolve(directory.toString(), buildFilename());
     await writeFile(filePath, data);
     return filePath;
@@ -73,7 +63,6 @@ export default class StorageManager {
   async handleMessage(message: StorageManagerMessage) {
       switch (message.type) {
           case MessageType.SAVE_PICTURE:
-              ensureDirExists(CAPTURE_PATH);
               // TODO: Check why we need to strip the first 17 bytes
               const imagePart = message.args.dataUri.replace(/^data:image\/\w+;base64,/, "");
               const result = await saveCapture(CAPTURE_PATH, Buffer.from(imagePart, 'base64'));

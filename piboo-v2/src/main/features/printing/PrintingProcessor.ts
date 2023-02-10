@@ -18,10 +18,9 @@ export default class PrintingProcessor {
         this.printer = new LpPrinter(printerSettings);
     }
 
-    async run(): Promise<PrintResult> {
-
+    private async collect(): Promise<string[]> {
         const PICTURES_PER_PAGE = 3;
-        const capturePath = this.capturePath;
+        const { capturePath } = this;
 
         // Get last 3 photos
         let list = fs.readdirSync(capturePath);
@@ -33,19 +32,31 @@ export default class PrintingProcessor {
         }
         list = list.slice(-PICTURES_PER_PAGE);
         list = list.map(filename => path.resolve(capturePath, filename));
-    
+        return list;
+    }
+
+    private async render(list: string[]): Promise<string> {
+        const { capturePath } = this;
         // Render our collage to a file for printing
-        let images: [string, string, string] = [ list[0], list[1], list[2] ];
+        let images: [string, string, string] = [list[0], list[1], list[2]];
         const cp = new CollageRenderer(images);
         const outFilename = await cp.render(capturePath);
-    
+        return outFilename;
+    }
+
+    private async print(filename: string) {
         // Send the file to printer
-        const result = await this.printer.print(outFilename);
+        const result = await this.printer.print(filename);
         if(result.status !== "OK") {
             throw new Error("Printing error, status: " + result.status);
         }
         return result;
-    
+    }
+
+    async run(): Promise<PrintResult> {
+        const list = await this.collect();
+        const outFilename = await this.render(list);
+        return this.print(outFilename);
     }
 
 }
