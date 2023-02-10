@@ -1,28 +1,17 @@
 import { AnyAction, createAction } from '@reduxjs/toolkit';
 import { ThunkMiddleware } from 'redux-thunk';
 import { AppState } from './appReducer';
+import { MessageClass } from "@common/Message";
+import StorageManagerMessage, { MessageType } from "@common/StorageManagerMessage";
+import Message from "@common/Message";
 
 const ipcRenderer = window.electron.ipcRenderer;
 
-// TODO: Import types from 'piboo-server'
-type Message = any;
-type CameraManagerMessage = any;
-enum MessageClass {
-  STORAGE_MANAGER
-};
-enum MessageType {
-  // Incoming
-  STORAGE_SAVE_PICTURE,
-  // Outgoing
-  STORAGE_PICTURE_SAVED,
-};
-
-// Camera management message creators
 export const savePicture = (dataUri: string) => {
 
   return {
     class: MessageClass.STORAGE_MANAGER,
-    type: MessageType.STORAGE_SAVE_PICTURE,
+    type: MessageType.SAVE_PICTURE,
     args: {
       dataUri,
     }
@@ -41,10 +30,10 @@ const messageHandler = (store: HasDispatch) => (_, arg0: any) => {
   const message = arg0 as Message;
   const { dispatch } = store;
   if (message.class === MessageClass.STORAGE_MANAGER) {
-    const cmm = message as CameraManagerMessage;
+    const cmm = message as StorageManagerMessage;
     switch (cmm.type) {
-      case MessageType.STORAGE_PICTURE_SAVED:
-        dispatch(pictureSaved(cmm.frame));
+      case MessageType.PICTURE_SAVED:
+        dispatch(pictureSaved());
         break;
       default:
         break;

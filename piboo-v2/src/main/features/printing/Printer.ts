@@ -1,10 +1,4 @@
-export interface PrinterSettings {
-    printerName: string,
-}
-
-export interface PrintResult {
-    status: "OK" | "ERROR";
-}
+import { PrintResult } from "@common/PrintingManagerMessage";
 
 export default interface Printer {
     print(document: string): Promise<PrintResult>;

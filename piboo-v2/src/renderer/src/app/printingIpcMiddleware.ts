@@ -1,23 +1,12 @@
+import Message, { MessageClass } from '@common/Message';
+import PrintingManagerMessage from '@common/PrintingManagerMessage';
+import { MessageType } from '@common/PrintingManagerMessage';
 import { AnyAction } from '@reduxjs/toolkit';
 import { ThunkMiddleware } from 'redux-thunk';
 import { AppState } from './appReducer';
 import { onPrintingCompleted } from './reducers/seriesControlSlice';
 
 const ipcRenderer = window.electron.ipcRenderer;
-
-// TODO: Import types from 'piboo-server'
-type Message = any;
-type PrintingManagerMessage = any;
-enum MessageClass {
-  PRINTING_MANAGER = 1,
-};
-enum MessageType {
-  // Incoming
-  PRINTING_PRINT_START,
-  // Outgoing
-  PRINTING_PRINT_COMPLETED,
-  PRINTING_PRINT_ERROR,
-};
 
 export const startPrinting = () => {
   return {

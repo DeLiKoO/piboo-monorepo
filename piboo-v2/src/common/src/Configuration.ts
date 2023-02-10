@@ -1,4 +1,4 @@
-import { PrinterSettings } from '../features/printing/Printer';
+import { PrinterSettings } from './PrintingManagerMessage';
 
 export default interface Configuration {
     

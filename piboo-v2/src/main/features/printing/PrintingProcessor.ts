@@ -3,8 +3,8 @@ import * as path from 'path';
 
 import CollageRenderer from '../collage/PdfKitCollageRenderer';
 
+import { PrinterSettings, PrintResult } from "@common/PrintingManagerMessage";
 import { CAPTURE_PATH } from '../../appConfig';
-import { PrintResult, PrinterSettings } from './Printer';
 import LpPrinter from './LpPrinter';
 
 // TODO: Move this implementation up to PrintingManager

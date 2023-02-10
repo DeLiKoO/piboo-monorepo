@@ -1,7 +1,6 @@
 import PrintingProcessor from "../../features/printing/PrintingProcessor";
-import { MessageClass } from "../Message";
-import PrintingManagerMessage, { MessageType } from "./PrintingManagerMessage";
-import { PrinterSettings } from "../../features/printing/Printer";
+import { MessageClass } from "@common/Message";
+import PrintingManagerMessage, { MessageType, PrinterSettings } from "@common/PrintingManagerMessage";
 
 type SendMessageCallback = (message: PrintingManagerMessage) => Promise<void>;
 

@@ -1,4 +1,4 @@
-import Message from "../Message";
+import Message from "./Message";
 
 export enum MessageType {
     // Incoming
@@ -7,7 +7,7 @@ export enum MessageType {
     PICTURE_SAVED,
 }
 
-export default interface CameraManagerMessage extends Message {
+export default interface StorageManagerMessage extends Message {
     type: MessageType,
     args?: any, // anyObject
 }

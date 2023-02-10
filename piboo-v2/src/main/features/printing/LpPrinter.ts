@@ -1,10 +1,11 @@
-import Printer, { PrintResult, PrinterSettings } from "./Printer";
+import Printer from "./Printer";
+import { PrintResult, PrinterSettings } from "@common/PrintingManagerMessage";
 import * as child_process from "child_process";
 
 enum JobState {
     NOT_COMPLETED,
     COMPLETED,
-} 
+}
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));    
 

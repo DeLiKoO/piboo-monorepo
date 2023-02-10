@@ -5,6 +5,11 @@ import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 export default defineConfig({
   main: {
+    resolve: {
+      alias: {
+        '@common': resolve('src/common/src'),
+      }
+    },
     plugins: [
       externalizeDepsPlugin(),
       viteStaticCopy({
@@ -18,12 +23,18 @@ export default defineConfig({
     ]
   },
   preload: {
+    resolve: {
+      alias: {
+        '@common': resolve('src/common/src'),
+      }
+    },
     plugins: [externalizeDepsPlugin()]
   },
   renderer: {
     resolve: {
       alias: {
-        '@renderer': resolve('src/renderer/src')
+        '@renderer': resolve('src/renderer/src'),
+        '@common': resolve('src/common/src'),
       }
     },
     plugins: [react()]

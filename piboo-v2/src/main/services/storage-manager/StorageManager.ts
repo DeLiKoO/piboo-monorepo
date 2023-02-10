@@ -1,5 +1,5 @@
-import { MessageClass } from "../Message";
-import StorageManagerMessage, { MessageType } from "./StorageManagerMessage";
+import { MessageClass } from "@common/Message";
+import StorageManagerMessage, { MessageType } from "@common/StorageManagerMessage";
 
 import * as fs from 'fs';
 import * as path from 'path';

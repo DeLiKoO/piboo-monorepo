@@ -1,5 +1,12 @@
-import { PrintResult } from "../../features/printing/Printer";
-import Message from "../Message";
+import Message from "./Message";
+
+export interface PrintResult {
+    status: "OK" | "ERROR";
+}
+
+export interface PrinterSettings {
+    printerName: string,
+}
 
 export enum MessageType {
     // Incoming

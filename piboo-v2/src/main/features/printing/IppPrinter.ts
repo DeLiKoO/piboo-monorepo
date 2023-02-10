@@ -1,7 +1,7 @@
-import Printer, { PrinterSettings, PrintResult } from "./Printer";
-
+import { PrinterSettings, PrintResult } from "@common/PrintingManagerMessage";
 import * as fs from 'fs';
 import * as ipp from 'ipp';
+import Printer from "./Printer";
 
 // A printing method that uses the IPP protocol
 export default class LpPrinter implements Printer {
