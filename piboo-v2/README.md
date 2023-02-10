@@ -31,4 +31,7 @@ $ npm run build:mac
 
 # For Linux
 $ npm run build:linux
+
+# For Linux, arm64
+$ pnpm build:linux --arm64
 ```
