@@ -49,6 +49,7 @@ export const countdown = createAsyncThunk(
     if(state.captureControl.countingDown) {
       return;
     }
+    dispatch(startLivePreview());
     dispatch(startCountdown());
     setTimeout(() => {
       dispatch(decrementCountdown());
@@ -60,6 +61,7 @@ export const countdown = createAsyncThunk(
       dispatch(decrementCountdown());
       dispatch(capture());
       dispatch(stopCountdown());
+      dispatch(stopLivePreview());
     }, 3000);
   }
 );
