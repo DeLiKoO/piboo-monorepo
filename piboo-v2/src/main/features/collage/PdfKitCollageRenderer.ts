@@ -8,7 +8,6 @@ import CollageRenderer from './CollageRenderer';
 export default class PdfKitCollageRenderer extends CollageRenderer {
 
     constructor(images: [PathLike, PathLike, PathLike]) {
-        console.log(JSON.stringify(images));
         super(images);
     }
 
