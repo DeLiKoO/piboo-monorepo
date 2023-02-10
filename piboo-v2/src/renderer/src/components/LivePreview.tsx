@@ -17,7 +17,6 @@ type LivePreviewProps = ReactProps;
 
 const LivePreview = (props: LivePreviewProps) => {
 
-  // const [img, setImg] = useState(PLACEHOLDER_IMG);
   const webcamRef: React.Ref<Webcam> = useRef(null);
 
   const dispatch = useDispatch();
@@ -26,14 +25,13 @@ const LivePreview = (props: LivePreviewProps) => {
     width: { min: CAM_WIDTH },
     height: { min: CAM_HEIGHT },
     aspectRatio: 0.6666666667,
-    facingMode: props.facingMode
+    facingMode: props.facingMode,
+    frameRate: { max: 25 },
   };
 
   useReduxEffect((action) => {
-    console.log("cheese!");
     if (webcamRef.current !== null) {
       const imageSrc = webcamRef.current.getScreenshot();
-      // setImg(imageSrc ?? PLACEHOLDER_IMG);
       if (imageSrc !== null) {
         dispatch(onSnapshotReceived(imageSrc));
         console.log(imageSrc);
@@ -49,7 +47,10 @@ const LivePreview = (props: LivePreviewProps) => {
       width='100%'
       height='100%'
       videoConstraints={videoConstraints}
-      screenshotFormat="image/jpeg" />
+      screenshotFormat="image/jpeg"
+      screenshotQuality={1}
+      forceScreenshotSourceSize={true}
+      imageSmoothing={false} />
   );
 }
 
