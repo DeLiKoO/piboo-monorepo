@@ -63,7 +63,6 @@ export default class StorageManager {
   async handleMessage(message: StorageManagerMessage) {
       switch (message.type) {
           case MessageType.SAVE_PICTURE:
-              // TODO: Check why we need to strip the first 17 bytes
               const imagePart = message.args.dataUri.replace(/^data:image\/\w+;base64,/, "");
               const result = await saveCapture(CAPTURE_PATH, Buffer.from(imagePart, 'base64'));
               this.sendMessage({

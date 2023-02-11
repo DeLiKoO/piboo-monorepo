@@ -11,6 +11,7 @@ specifiers:
   '@fortawesome/react-fontawesome': ^0.1.14
   '@reduxjs/toolkit': ^1.1.0
   '@types/ipp': ^2.0.2
+  '@types/js-yaml': ^4.0.5
   '@types/lodash': ^4.14.191
   '@types/node': 16.18.11
   '@types/react': 18.0.26
@@ -28,6 +29,7 @@ specifiers:
   eslint-plugin-prettier: ^4.2.1
   eslint-plugin-react: ^7.31.11
   ipp: ^2.0.1
+  js-yaml: ^4.1.0
   lodash: ^4.17.21
   pdfkit: ^0.12.1
   prettier: ^2.8.2
@@ -55,6 +57,7 @@ devDependencies:
   '@electron/notarize': 1.2.3
   '@reduxjs/toolkit': 1.9.1_k4ae6lp43ej6mezo3ztvx6pykq
   '@types/ipp': 2.0.2
+  '@types/js-yaml': 4.0.5
   '@types/lodash': 4.14.191
   '@types/node': 16.18.11
   '@types/react': 18.0.26
@@ -72,6 +75,7 @@ devDependencies:
   eslint-plugin-prettier: 4.2.1_cn4lalcyadplruoxa5mhp7j3dq
   eslint-plugin-react: 7.32.1_eslint@8.32.0
   ipp: 2.0.1
+  js-yaml: 4.1.0
   lodash: 4.17.21
   pdfkit: 0.12.3
   prettier: 2.8.3
@@ -882,6 +886,10 @@ packages:
     resolution: {integrity: sha512-OUD/dyn9Dyfxb43j/N53Pn9DfLZCyIjAqrQsdh8B4afJoeP82GRxWE6vZ3HDyjlLKI5P9MaRttZeUseOsJTqqg==}
     dependencies:
       '@types/node': 16.18.11
+    dev: true
+
+  /@types/js-yaml/4.0.5:
+    resolution: {integrity: sha512-FhpRzf927MNQdRZP0J5DLIdTXhjLYzeUTmLAu69mnVksLH9CJY3IuSeEgbKUki7GQZm0WqDkGzyxju2EZGD2wA==}
     dev: true
 
   /@types/json-schema/7.0.11:
