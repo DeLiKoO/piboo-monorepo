@@ -5,15 +5,15 @@ import * as os from 'os';
 import * as path from 'path';
 import CollageRenderer from './CollageRenderer';
 
-export default class PdfKitCollageRenderer extends CollageRenderer {
+export default class PdfKitCollageRenderer implements CollageRenderer {
 
-    constructor(images: [PathLike, PathLike, PathLike]) {
-        super(images);
+    constructor(
+        public readonly images: [PathLike, PathLike, PathLike]) {
     }
 
     async render(destinationPath: PathLike): Promise<string> {
 
-        const images = this._images;
+        const images = this.images;
         const template = path.resolve(os.homedir(), '.config/piboo-v2/Templates/template.png');
 
         return new Promise((resolve, reject) => {

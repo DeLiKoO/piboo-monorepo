@@ -1,33 +1,32 @@
-// Expressed in points (72 points = 1 inch)
-export interface Coordinates {
-    x: number,
-    y: number,
+import Coordinates from "./Coordinates";
+import Box from "./Box";
+
+export interface WithDestination {
+    destination: Box;
 }
 
-export interface Box {
-    topLeft: Coordinates;
-    topRight: Coordinates;
-}
-
-export interface Renderable {
-    container: Box;
-}
-
-export interface Capture extends Renderable {
+export interface Capture extends WithDestination {
     seriesIndex: number; // index in the capture series to be contained in the box
 }
 
-export interface StaticImage extends Renderable {
+export interface StaticImage extends WithDestination {
     imagePath: string;
 }
 
-export interface DynamicText extends Renderable {
+export interface DynamicText extends WithDestination {
     templateString: string;
     cssStyle: string; // let's try and use full-blown css properties !
 }
 
+export type ComponentSpec = { capture: Capture } | { staticImage: StaticImage } | { dynamicText: DynamicText };
+
+export interface PageSettings {
+    dimensions: Coordinates;
+}
+
 export interface CollageLayout {
-    renderables: Array<Renderable>;
+    page: PageSettings;
+    components: Array<ComponentSpec>;
 }
 
 export interface Template {
@@ -37,5 +36,10 @@ export interface Template {
     viewfinder: string;
 }
 
+
+export {
+    Coordinates,
+    Box,
+};
 
 export default Template;
