@@ -1,7 +1,7 @@
 export enum MessageClass {
   STORAGE_MANAGER,
   PRINTING_MANAGER,
-  TEMPLATE_MANAGER,
+  SETTINGS_MANAGER,
 }
 
 export default interface Message {

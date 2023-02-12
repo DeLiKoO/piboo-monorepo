@@ -3,22 +3,27 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { ipcMain } from 'electron';
-import PrintingManager from './services/printing-manager/PrintingManager';
-import StorageManager from './services/storage-manager/StorageManager';
+import PrintingManager from './services/PrintingManager';
+import StorageManager from './services/StorageManager';
+import SettingsManager from './services/SettingsManager';
 
 import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer';
+import { MessageClass } from '@common/Message';
 
 function createWindow(): void {
 
   const printingManager = new PrintingManager(async (message) => mainWindow.webContents.send('message', message));
   const storageManager = new StorageManager(async (message) => mainWindow.webContents.send('message', message));
+  const settingsManager = new SettingsManager(async (message) => mainWindow.webContents.send('message', message));
 
   ipcMain.on('message', (_, message) => {
-      if (message.class === 0) { // MessageClass.STORAGE_MANAGER
-          storageManager.handleMessage(message);
-      } else if (message.class === 1) { // MessageClass.PRINTING_MANAGER
-          printingManager.handleMessage(message);
-      }
+    if (message.class === MessageClass.STORAGE_MANAGER) {
+      storageManager.handleMessage(message);
+    } else if (message.class === MessageClass.PRINTING_MANAGER) {
+      printingManager.handleMessage(message);
+    } else if (message.class === MessageClass.SETTINGS_MANAGER) {
+      settingsManager.handleMessage(message);
+    }
   });
 
   // Create the browser window.
@@ -62,12 +67,12 @@ app.whenReady().then(() => {
   electronApp.setAppUserModelId('com.electron')
 
   installExtension(REDUX_DEVTOOLS)
-        .then((name) => console.log(`Added Extension:  ${name}`))
-        .catch((err) => console.log('An error occurred: ', err));
+    .then((name) => console.log(`Added Extension:  ${name}`))
+    .catch((err) => console.log('An error occurred: ', err));
 
   installExtension(REACT_DEVELOPER_TOOLS)
-        .then((name) => console.log(`Added Extension:  ${name}`))
-        .catch((err) => console.log('An error occurred: ', err));
+    .then((name) => console.log(`Added Extension:  ${name}`))
+    .catch((err) => console.log('An error occurred: ', err));
 
   // Default open or close DevTools by F12 in development
   // and ignore CommandOrControl + R in production.

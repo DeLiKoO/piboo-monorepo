@@ -2,23 +2,22 @@ import { AnyAction, createAction } from '@reduxjs/toolkit';
 import { ThunkMiddleware } from 'redux-thunk';
 import { AppState } from './appReducer';
 import { MessageClass } from "@common/Message";
-import StorageManagerMessage, { MessageType } from "@common/StorageManagerMessage";
+import SettingsManagerMessage, { MessageType } from "@common/SettingsManagerMessage";
 import Message from "@common/Message";
+import Settings from '@common/Settings';
 
 const ipcRenderer = window.electron.ipcRenderer;
 
-export const savePicture = (dataUri: string) => {
+export const getSettings = () => {
 
   return {
-    class: MessageClass.STORAGE_MANAGER,
-    type: MessageType.SAVE_PICTURE,
-    args: {
-      dataUri,
-    }
+    class: MessageClass.SETTINGS_MANAGER,
+    type: MessageType.GET_SETTINGS,
   };
 }
 
-export const pictureSaved = createAction('pictureSaved');
+// dispatched when settings are received
+export const settings = createAction<Settings>('settings');
 
 // TODO: Check how to import proper types instead of this
 interface HasDispatch {
@@ -29,11 +28,11 @@ const messageHandler = (store: HasDispatch) => (_, arg0: any) => {
   console.debug({arg0});
   const message = arg0 as Message;
   const { dispatch } = store;
-  if (message.class === MessageClass.STORAGE_MANAGER) {
-    const cmm = message as StorageManagerMessage;
+  if (message.class === MessageClass.SETTINGS_MANAGER) {
+    const cmm = message as SettingsManagerMessage;
     switch (cmm.type) {
-      case MessageType.PICTURE_SAVED:
-        dispatch(pictureSaved());
+      case MessageType.SETTINGS:
+        dispatch(settings(cmm.args[0] as Settings));
         break;
       default:
         break;
@@ -44,10 +43,9 @@ const messageHandler = (store: HasDispatch) => (_, arg0: any) => {
 function ipcMiddleware(): ThunkMiddleware<AppState> {
   return store => next => action => {
     switch (action.type) {
-      case 'onSnapshotReceived':
-        const message = savePicture(action.payload);
+      case 'loadSettings':
+        const message = getSettings();
         ipcRenderer.send('message', message);
-        // NOTICE: Only register a one-time listener
         ipcRenderer.once('message', messageHandler(store));
         break;
       default:

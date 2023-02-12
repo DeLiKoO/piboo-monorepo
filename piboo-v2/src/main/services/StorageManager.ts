@@ -4,7 +4,7 @@ import StorageManagerMessage, { MessageType } from "@common/StorageManagerMessag
 import * as fs from 'fs';
 import * as path from 'path';
 
-import { CAPTURE_PATH } from '../../appConfig';
+import { CAPTURE_PATH } from '../appConfig';
 
   function ensureDirExists(dirPath: fs.PathLike) {
     if (!fs.existsSync(dirPath)) {

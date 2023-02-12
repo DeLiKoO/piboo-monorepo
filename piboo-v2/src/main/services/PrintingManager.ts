@@ -1,4 +1,4 @@
-import PrintingProcessor from "../../features/printing/PrintingProcessor";
+import PrintingProcessor from "../features/printing/PrintingProcessor";
 import { MessageClass } from "@common/Message";
 import PrintingManagerMessage, { MessageType, PrinterSettings } from "@common/PrintingManagerMessage";
 
