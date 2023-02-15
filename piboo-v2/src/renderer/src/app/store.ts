@@ -4,6 +4,8 @@ import { useDispatch } from 'react-redux';
 import appReducer, { AppState } from './appReducer';
 import storageIpcMiddleware from './storageIpcMiddleware';
 import printingIpcMiddleware from './printingIpcMiddleware';
+import settingsIpcMiddleware from './settingsIpcMiddleware';
+import { loadSettings } from './settingsIpcMiddleware';
 
 const store = configureStore({
   reducer: appReducer,
@@ -11,8 +13,11 @@ const store = configureStore({
     ...getDefaultMiddleware(), 
     storageIpcMiddleware(),
     printingIpcMiddleware(),
+    settingsIpcMiddleware(),
   ],
 });
+
+store.dispatch(loadSettings());
 
 export type AppDispatch = typeof store.dispatch
 

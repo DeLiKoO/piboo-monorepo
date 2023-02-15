@@ -10,6 +10,4 @@ const appConfig = {
     TEMPLATES_PATH,
 };
 
-console.log(appConfig);
-
 export default appConfig;

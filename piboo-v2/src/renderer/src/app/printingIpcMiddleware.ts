@@ -1,22 +1,20 @@
 import Message, { MessageClass } from '@common/Message';
 import PrintingManagerMessage from '@common/PrintingManagerMessage';
 import { MessageType } from '@common/PrintingManagerMessage';
+import Settings from '@common/Settings';
 import { AnyAction } from '@reduxjs/toolkit';
 import { ThunkMiddleware } from 'redux-thunk';
 import { AppState } from './appReducer';
 import { onPrintingCompleted } from './reducers/seriesControlSlice';
 
 const ipcRenderer = window.electron.ipcRenderer;
+let settings: Omit<Settings, 'template'> = { printer: { printerName: "Canon_TS8200_series" } };
 
 export const startPrinting = () => {
   return {
     class: MessageClass.PRINTING_MANAGER,
     type: MessageType.PRINTING_PRINT_START,
-    args: {
-      printer: {
-        printerName: "Canon_TS8200_series",
-      }
-    }
+    args: settings,
   };
 }
 
@@ -29,8 +27,8 @@ const messageHandler = (store: HasDispatch) => (_, arg0: any) => {
   const message = arg0 as Message;
   const { dispatch } = store;
   if (message.class === MessageClass.PRINTING_MANAGER) {
-    const pmm = message as PrintingManagerMessage;
-    switch (pmm.type) {
+    const msg = message as PrintingManagerMessage;
+    switch (msg.type) {
       case MessageType.PRINTING_PRINT_COMPLETED:
         dispatch(onPrintingCompleted());
         break;
@@ -46,6 +44,10 @@ const messageHandler = (store: HasDispatch) => (_, arg0: any) => {
 function printingIpcMiddleware(): ThunkMiddleware<AppState> {
   return store => next => action => {
     switch (action.type) {
+      case 'settings':
+        console.debug("Loaded settings:", settings);
+        settings = action.payload as Settings;
+        break;
       case 'seriesControl/startPrinting':
         ipcRenderer.send('message', startPrinting());
         // NOTICE: Only register a one-time listener,

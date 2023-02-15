@@ -46,15 +46,11 @@ export default class LpPrinter implements Printer {
             process.on("close", exitCode => {
                 if(exitCode === 0) {
                     const stdout = chunks.join("");
-                    console.debug("stdout:", stdout);
                     const lines = stdout.split(/\n/);
                     for(let line of lines) {
-                        console.debug("line:", line);
                         const match = line.match(/request id is ([^\s]+)/);
-                        console.debug("match:", match);
                         if(match !== null && match.length > 1) {
                             const jobId = match[1];
-                            console.debug("jobId:", jobId);
                             resolve(jobId);
                             return;
                         }
@@ -86,12 +82,9 @@ export default class LpPrinter implements Printer {
             process.on("close", exitCode => {
                 if(exitCode === 0) {
                     const stdout = chunks.join("");
-                    console.debug("stdout:", stdout);
                     const lines = stdout.split(/\n/);
                     const entries = lines.map(entry => entry.replaceAll(/\s+/g, ";").split(';'));
-                    console.debug("entries:", entries);
                     const matching = entries.filter(e => e[0] === jobId);
-                    console.debug("matching:", matching);
                     if(matching.length > 0) {
                         resolve(JobState.NOT_COMPLETED);
                     } else {

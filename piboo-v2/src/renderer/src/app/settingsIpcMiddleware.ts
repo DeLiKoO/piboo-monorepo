@@ -9,7 +9,6 @@ import Settings from '@common/Settings';
 const ipcRenderer = window.electron.ipcRenderer;
 
 export const getSettings = () => {
-
   return {
     class: MessageClass.SETTINGS_MANAGER,
     type: MessageType.GET_SETTINGS,
@@ -18,6 +17,7 @@ export const getSettings = () => {
 
 // dispatched when settings are received
 export const settings = createAction<Settings>('settings');
+export const loadSettings = createAction<void>('loadSettings');
 
 // TODO: Check how to import proper types instead of this
 interface HasDispatch {
@@ -25,14 +25,13 @@ interface HasDispatch {
 }
 
 const messageHandler = (store: HasDispatch) => (_, arg0: any) => {
-  console.debug({arg0});
   const message = arg0 as Message;
   const { dispatch } = store;
   if (message.class === MessageClass.SETTINGS_MANAGER) {
-    const cmm = message as SettingsManagerMessage;
-    switch (cmm.type) {
+    const msg = message as SettingsManagerMessage;
+    switch (msg.type) {
       case MessageType.SETTINGS:
-        dispatch(settings(cmm.args[0] as Settings));
+        dispatch(settings(msg.args[0] as Settings));
         break;
       default:
         break;

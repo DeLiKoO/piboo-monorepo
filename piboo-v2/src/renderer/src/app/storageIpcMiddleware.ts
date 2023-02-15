@@ -26,12 +26,11 @@ interface HasDispatch {
 }
 
 const messageHandler = (store: HasDispatch) => (_, arg0: any) => {
-  console.debug({arg0});
   const message = arg0 as Message;
   const { dispatch } = store;
   if (message.class === MessageClass.STORAGE_MANAGER) {
-    const cmm = message as StorageManagerMessage;
-    switch (cmm.type) {
+    const msg = message as StorageManagerMessage;
+    switch (msg.type) {
       case MessageType.PICTURE_SAVED:
         dispatch(pictureSaved());
         break;
