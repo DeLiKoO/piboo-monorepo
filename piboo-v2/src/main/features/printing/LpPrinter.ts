@@ -21,19 +21,19 @@ export default class LpPrinter implements Printer {
     // returns promise of a job-id
     async start_print_job(filename: string): Promise<string> {
         return new Promise((resolve, reject) => {
+            const { settings } = this;
+            const { printerName, printerOptions } = settings;
+            const lpArgs: string[] = [];
+            lpArgs.push("-d", printerName);
+            for(let opt in printerOptions) {
+                lpArgs.push("-o");
+                lpArgs.push(`${opt}=${printerOptions[opt]}`);
+            }
+            lpArgs.push("--", filename);
+            console.debug("lpArgs:", lpArgs);
             const process = child_process.spawn(
                 "lp",
-                [
-                    "-d", this.settings.printerName,
-                    "-o", "media=4x6.Borderless",
-                    "-o", "print-scaling=none",
-                    "-o", "media-source=rear",
-                    "-o", "media-top-margin=0",
-                    "-o", "media-left-margin=0",
-                    "-o", "media-right-margin=0",
-                    "-o", "media-bottom-margin=0",
-                    "--", filename
-                ],
+                lpArgs,
                 {
                     timeout: 10000,
                 }

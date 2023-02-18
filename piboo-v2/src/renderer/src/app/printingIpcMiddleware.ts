@@ -8,7 +8,18 @@ import { AppState } from './appReducer';
 import { onPrintingCompleted } from './reducers/seriesControlSlice';
 
 const ipcRenderer = window.electron.ipcRenderer;
-let settings: Omit<Settings, 'template'> = { printer: { printerName: "Canon_TS8200_series" } };
+let settings: Omit<Settings, 'template'> = { printer: {
+  printerName: "Canon_TS8200_series",
+  printerOptions: {
+    "media":"4x6.Borderless",
+    "print-scaling":"none",
+    "media-source":"rear",
+    "media-top-margin":"0",
+    "media-left-margin":"0",
+    "media-right-margin":"0",
+    "media-bottom-margin":"0",
+  }
+} };
 
 export const startPrinting = () => {
   return {

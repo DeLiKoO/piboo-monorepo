@@ -6,6 +6,7 @@ export interface PrintResult {
 
 export interface PrinterSettings {
     printerName: string,
+    printerOptions: Record<string, string>,
 }
 
 export enum MessageType {
