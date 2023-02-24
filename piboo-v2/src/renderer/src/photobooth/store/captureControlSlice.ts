@@ -1,5 +1,5 @@
 import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { AppState } from '../appReducer';
+import { AppState } from '.';
 
 type Frame = string; // TODO: Import this type definition
 

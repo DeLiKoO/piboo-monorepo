@@ -1,7 +1,7 @@
 import '@fortawesome/fontawesome-free/js/all';
 import { faCheck, faPrint } from '@fortawesome/free-solid-svg-icons';
-import { onSeriesCompleted, startPrinting } from '../app/reducers/seriesControlSlice';
-import { useAppDispatch } from '../app/store';
+import { onSeriesCompleted, startPrinting } from '../store/seriesControlSlice';
+import { useAppDispatch } from '../../store';
 import { PostPrintActionButton } from './PostPrintActionButton';
 import './PostPrintActions.module.css';
 import styles from './PostPrintActions.module.css';

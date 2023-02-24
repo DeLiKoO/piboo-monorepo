@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import {
   selectCountdown
-} from '../app/reducers/captureControlSlice';
+} from '../store/captureControlSlice';
 import styles from './Countdown.module.css';
 
 export function Countdown() {

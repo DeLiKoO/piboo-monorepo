@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { AppState } from '../appReducer';
+import { AppState } from '../store';
 import { countdown } from './captureControlSlice';
 
 export const SERIES_NOT_STARTED = 0;

@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react'; // we need this to make JSX compile
 import { connect, useDispatch } from 'react-redux';
 import Webcam from "react-webcam";
-import { useReduxEffect } from '../lib/use-redux-effect';
-import { onSnapshotReceived } from '@renderer/app/reducers/captureControlSlice';
+import { useReduxEffect } from '../../lib/use-redux-effect';
+import { onSnapshotReceived } from '../store/captureControlSlice';
 
 const CAM_WIDTH = 1920;
 const CAM_HEIGHT = 1080;

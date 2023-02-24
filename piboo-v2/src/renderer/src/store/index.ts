@@ -1,11 +1,11 @@
 // For more information, see: https://redux-toolkit.js.org/usage/usage-with-typescript
 import { AnyAction, configureStore, getDefaultMiddleware, ThunkDispatch } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
-import appReducer, { AppState } from './appReducer';
-import storageIpcMiddleware from './storageIpcMiddleware';
-import printingIpcMiddleware from './printingIpcMiddleware';
-import settingsIpcMiddleware from './settingsIpcMiddleware';
-import { loadSettings } from './settingsIpcMiddleware';
+import appReducer, { AppState } from '../photobooth/store/index';
+import storageIpcMiddleware from '../photobooth/store/storageIpcMiddleware';
+import printingIpcMiddleware from '../photobooth/store/printingIpcMiddleware';
+import settingsIpcMiddleware from '../photobooth/store/settingsIpcMiddleware';
+import { loadSettings } from '../photobooth/store/settingsIpcMiddleware';
 
 const store = configureStore({
   reducer: appReducer,

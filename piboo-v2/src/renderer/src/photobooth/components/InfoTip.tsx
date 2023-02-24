@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { isPrinting, selectCaptureInSeries, SERIES_NOT_STARTED } from '../app/reducers/seriesControlSlice';
+import { isPrinting, selectCaptureInSeries, SERIES_NOT_STARTED } from '../store/seriesControlSlice';
 
 
 type InfoTipProps = {

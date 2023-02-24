@@ -1,0 +1,32 @@
+.VLayout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.LivePreviewContainer {
+  width: 960px;
+  height: 540px;
+  position: relative;
+}
+
+.LivePreviewOverlay1 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+
+.LivePreviewOverlay2 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  overflow: clip;
+}

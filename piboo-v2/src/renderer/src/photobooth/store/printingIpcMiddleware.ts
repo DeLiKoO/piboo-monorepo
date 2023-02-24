@@ -4,8 +4,8 @@ import { MessageType } from '@common/PrintingManagerMessage';
 import Settings from '@common/Settings';
 import { AnyAction } from '@reduxjs/toolkit';
 import { ThunkMiddleware } from 'redux-thunk';
-import { AppState } from './appReducer';
-import { onPrintingCompleted } from './reducers/seriesControlSlice';
+import { AppState } from '.';
+import { onPrintingCompleted } from './seriesControlSlice';
 
 const ipcRenderer = window.electron.ipcRenderer;
 let settings: Omit<Settings, 'template'> = { printer: {

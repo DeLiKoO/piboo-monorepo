@@ -1,0 +1,6 @@
+.AppHeader {
+  font-size: 10px;
+  display: flex;
+  flex-direction: column;
+  color: white;
+}

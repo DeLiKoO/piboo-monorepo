@@ -1,23 +1,24 @@
 import { AnyAction, createAction } from '@reduxjs/toolkit';
 import { ThunkMiddleware } from 'redux-thunk';
-import { AppState } from './appReducer';
+import { AppState } from '.';
 import { MessageClass } from "@common/Message";
-import SettingsManagerMessage, { MessageType } from "@common/SettingsManagerMessage";
+import StorageManagerMessage, { MessageType } from "@common/StorageManagerMessage";
 import Message from "@common/Message";
-import Settings from '@common/Settings';
 
 const ipcRenderer = window.electron.ipcRenderer;
 
-export const getSettings = () => {
+export const savePicture = (dataUri: string) => {
+
   return {
-    class: MessageClass.SETTINGS_MANAGER,
-    type: MessageType.GET_SETTINGS,
+    class: MessageClass.STORAGE_MANAGER,
+    type: MessageType.SAVE_PICTURE,
+    args: {
+      dataUri,
+    }
   };
 }
 
-// dispatched when settings are received
-export const settings = createAction<Settings>('settings');
-export const loadSettings = createAction<void>('loadSettings');
+export const pictureSaved = createAction('pictureSaved');
 
 // TODO: Check how to import proper types instead of this
 interface HasDispatch {
@@ -27,11 +28,11 @@ interface HasDispatch {
 const messageHandler = (store: HasDispatch) => (_, arg0: any) => {
   const message = arg0 as Message;
   const { dispatch } = store;
-  if (message.class === MessageClass.SETTINGS_MANAGER) {
-    const msg = message as SettingsManagerMessage;
+  if (message.class === MessageClass.STORAGE_MANAGER) {
+    const msg = message as StorageManagerMessage;
     switch (msg.type) {
-      case MessageType.SETTINGS:
-        dispatch(settings(msg.args[0] as Settings));
+      case MessageType.PICTURE_SAVED:
+        dispatch(pictureSaved());
         break;
       default:
         break;
@@ -42,9 +43,10 @@ const messageHandler = (store: HasDispatch) => (_, arg0: any) => {
 function ipcMiddleware(): ThunkMiddleware<AppState> {
   return store => next => action => {
     switch (action.type) {
-      case 'loadSettings':
-        const message = getSettings();
+      case 'onSnapshotReceived':
+        const message = savePicture(action.payload);
         ipcRenderer.send('message', message);
+        // NOTICE: Only register a one-time listener
         ipcRenderer.once('message', messageHandler(store));
         break;
       default:

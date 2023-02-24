@@ -1,11 +1,11 @@
 import styles from './CaptureControl.module.css';
 import React, { useEffect, useRef } from 'react';
-import { useAppDispatch } from '../app/store';
-import { startSeries, isPrinting, onPrintingCompleted } from '../app/reducers/seriesControlSlice';
+import { useAppDispatch } from '../../store';
+import { startSeries, isPrinting, onPrintingCompleted } from '../store/seriesControlSlice';
 import { Countdown } from './Countdown';
 import Spinner from 'react-bootstrap/Spinner';
 import { useSelector } from 'react-redux';
-import { selectCountdown, startLivePreview, stopLivePreview } from '../app/reducers/captureControlSlice';
+import { selectCountdown, startLivePreview, stopLivePreview } from '../store/captureControlSlice';
 
 type CaptureControlProps = {
   //device: string,
