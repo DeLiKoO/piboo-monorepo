@@ -31,7 +31,8 @@ const messageHandler = (store: HasDispatch) => (_, arg0: any) => {
     const msg = message as SettingsManagerMessage;
     switch (msg.type) {
       case MessageType.SETTINGS:
-        dispatch(settings(msg.args[0] as Settings));
+        console.log(JSON.stringify(msg));
+        dispatch(settings(msg.args["settings"] as Settings));
         break;
       default:
         break;

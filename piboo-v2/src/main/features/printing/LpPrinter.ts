@@ -25,9 +25,9 @@ export default class LpPrinter implements Printer {
             const { printerName, printerOptions } = settings;
             const lpArgs: string[] = [];
             lpArgs.push("-d", printerName);
-            for(let opt in printerOptions) {
+            for(const [key, value] of Object.entries(printerOptions)) {
                 lpArgs.push("-o");
-                lpArgs.push(`${opt}=${printerOptions[opt]}`);
+                lpArgs.push(`${key}=${value}`);
             }
             lpArgs.push("--", filename);
             console.debug("lpArgs:", lpArgs);
