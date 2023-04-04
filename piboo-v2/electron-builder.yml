@@ -12,6 +12,7 @@ asarUnpack:
   - resources/*
 afterSign: build/notarize.js
 linux:
+  category: Graphics
   target:
     - target: deb
       arch:
