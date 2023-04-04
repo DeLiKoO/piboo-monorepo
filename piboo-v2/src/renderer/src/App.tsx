@@ -12,8 +12,6 @@ function App(): JSX.Element {
   return (
     <div className={styles.App}>
       <header className={styles.AppHeader}>
-        <p>PiBoo Photobooth for RPi - Work in Progress</p>
-        <Versions></Versions>
         <InfoTip />
       </header>
       <div className={styles.LivePreviewContainer}>
